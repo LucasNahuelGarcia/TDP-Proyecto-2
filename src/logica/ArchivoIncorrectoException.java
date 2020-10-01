@@ -5,11 +5,13 @@ package logica;
  * formato correcto
  */
 public class ArchivoIncorrectoException extends Exception {
-	/**
-	 * Crea un nuevo ArchivoIncorrectoException, con un mensaje de error s
-	 * 
-	 * @param s Mensaje que se envía al lanzar la excepción.
-	 */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Crea un nuevo ArchivoIncorrectoException, con un mensaje de error s
+   * 
+   * @param s Mensaje que se envía al lanzar la excepción.
+   */
 	public ArchivoIncorrectoException(String s) {
 		super(s);
 	}
