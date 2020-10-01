@@ -17,7 +17,7 @@ import javax.swing.border.Border;
 public class VentanaPrincipal extends JFrame {
 
 	private JPanel main;
-	private JPanel panel;
+	private JPanel region_7;
 
 	/**
 	 * Launch the application.
@@ -64,90 +64,90 @@ public class VentanaPrincipal extends JFrame {
 		gbl_tablero.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 		tablero.setLayout(gbl_tablero);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 0;
-		tablero.add(panel_1, gbc_panel_1);
+		JPanel region_1 = new JPanel();
+		region_1.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_1 = new GridBagConstraints();
+		gbc_region_1.fill = GridBagConstraints.BOTH;
+		gbc_region_1.insets = new Insets(0, 0, 5, 5);
+		gbc_region_1.gridx = 0;
+		gbc_region_1.gridy = 0;
+		tablero.add(region_1, gbc_region_1);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
-		gbc_panel_2.fill = GridBagConstraints.BOTH;
-		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_2.gridx = 1;
-		gbc_panel_2.gridy = 0;
-		tablero.add(panel_2, gbc_panel_2);
+		JPanel region_2 = new JPanel();
+		region_2.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_2 = new GridBagConstraints();
+		gbc_region_2.fill = GridBagConstraints.BOTH;
+		gbc_region_2.insets = new Insets(0, 0, 5, 5);
+		gbc_region_2.gridx = 1;
+		gbc_region_2.gridy = 0;
+		tablero.add(region_2, gbc_region_2);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
-		gbc_panel_3.fill = GridBagConstraints.BOTH;
-		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_3.gridx = 2;
-		gbc_panel_3.gridy = 0;
-		tablero.add(panel_3, gbc_panel_3);
+		JPanel region_3 = new JPanel();
+		region_3.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_3 = new GridBagConstraints();
+		gbc_region_3.fill = GridBagConstraints.BOTH;
+		gbc_region_3.insets = new Insets(0, 0, 5, 0);
+		gbc_region_3.gridx = 2;
+		gbc_region_3.gridy = 0;
+		tablero.add(region_3, gbc_region_3);
 		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
-		gbc_panel_4.fill = GridBagConstraints.BOTH;
-		gbc_panel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_4.gridx = 0;
-		gbc_panel_4.gridy = 1;
-		tablero.add(panel_4, gbc_panel_4);
+		JPanel region_4 = new JPanel();
+		region_4.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_4 = new GridBagConstraints();
+		gbc_region_4.fill = GridBagConstraints.BOTH;
+		gbc_region_4.insets = new Insets(0, 0, 5, 5);
+		gbc_region_4.gridx = 0;
+		gbc_region_4.gridy = 1;
+		tablero.add(region_4, gbc_region_4);
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
-		gbc_panel_5.fill = GridBagConstraints.BOTH;
-		gbc_panel_5.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_5.gridx = 1;
-		gbc_panel_5.gridy = 1;
-		tablero.add(panel_5, gbc_panel_5);
+		JPanel region_5 = new JPanel();
+		region_5.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_5 = new GridBagConstraints();
+		gbc_region_5.fill = GridBagConstraints.BOTH;
+		gbc_region_5.insets = new Insets(0, 0, 5, 5);
+		gbc_region_5.gridx = 1;
+		gbc_region_5.gridy = 1;
+		tablero.add(region_5, gbc_region_5);
 		
-		JPanel panel_6 = new JPanel();
-		panel_6.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
-		gbc_panel_6.fill = GridBagConstraints.BOTH;
-		gbc_panel_6.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_6.gridx = 2;
-		gbc_panel_6.gridy = 1;
-		tablero.add(panel_6, gbc_panel_6);
+		JPanel region_6 = new JPanel();
+		region_6.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_6 = new GridBagConstraints();
+		gbc_region_6.fill = GridBagConstraints.BOTH;
+		gbc_region_6.insets = new Insets(0, 0, 5, 0);
+		gbc_region_6.gridx = 2;
+		gbc_region_6.gridy = 1;
+		tablero.add(region_6, gbc_region_6);
 		
-		panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.insets = new Insets(0, 0, 0, 5);
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 2;
-		tablero.add(panel, gbc_panel);
+		region_7 = new JPanel();
+		region_7.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_7 = new GridBagConstraints();
+		gbc_region_7.fill = GridBagConstraints.BOTH;
+		gbc_region_7.insets = new Insets(0, 0, 0, 5);
+		gbc_region_7.gridx = 0;
+		gbc_region_7.gridy = 2;
+		tablero.add(region_7, gbc_region_7);
 		
-		JPanel panel_8 = new JPanel();
-		panel_8.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
-		gbc_panel_8.fill = GridBagConstraints.BOTH;
-		gbc_panel_8.insets = new Insets(0, 0, 0, 5);
-		gbc_panel_8.gridx = 1;
-		gbc_panel_8.gridy = 2;
-		tablero.add(panel_8, gbc_panel_8);
+		JPanel region_8 = new JPanel();
+		region_8.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_8 = new GridBagConstraints();
+		gbc_region_8.fill = GridBagConstraints.BOTH;
+		gbc_region_8.insets = new Insets(0, 0, 0, 5);
+		gbc_region_8.gridx = 1;
+		gbc_region_8.gridy = 2;
+		tablero.add(region_8, gbc_region_8);
 		
-		JPanel panel_9 = new JPanel();
-		panel_9.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
-		GridBagConstraints gbc_panel_9 = new GridBagConstraints();
-		gbc_panel_9.fill = GridBagConstraints.BOTH;
-		gbc_panel_9.gridx = 2;
-		gbc_panel_9.gridy = 2;
-		tablero.add(panel_9, gbc_panel_9);
+		JPanel region_9 = new JPanel();
+		region_9.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY, null, null));
+		GridBagConstraints gbc_region_9 = new GridBagConstraints();
+		gbc_region_9.fill = GridBagConstraints.BOTH;
+		gbc_region_9.gridx = 2;
+		gbc_region_9.gridy = 2;
+		tablero.add(region_9, gbc_region_9);
 	}
 	public Border getBorde_region() {
-		return panel.getBorder();
+		return region_7.getBorder();
 	}
 	public void setBorde_region(Border border) {
-		panel.setBorder(border);
+		region_7.setBorder(border);
 	}
 }
