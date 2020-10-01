@@ -25,3 +25,6 @@ tmp/
 local.properties
 .loadpath
 .factorypath
+
+#librerias
+/src/lib

@@ -493,7 +493,6 @@ public class VentanaPrincipal extends JFrame {
 		textField_33.setText("");
 		textField_33.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_33.setFont(new Font("FreeSans", Font.BOLD, 22));
-		textField_33.setEditable(true);
 		textField_33.setDoubleBuffered(false);
 		panel_3.add(textField_33);
 		
