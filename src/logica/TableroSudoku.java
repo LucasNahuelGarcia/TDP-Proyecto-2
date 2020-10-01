@@ -34,35 +34,35 @@ public class TableroSudoku {
    * un espacio.
    * 
    * @param ruta Ruta del archivo
-   * @throws FileNotFoundException En caso de no encontrar el archivo.
-   * @throws ArchivoIncorrectoException En caso de que el archivo no respete el formato.
+   * @throws FileNotFoundException      En caso de no encontrar el archivo.
+   * @throws ArchivoIncorrectoException En caso de que el archivo no respete el
+   *                                    formato.
    */
   public void readFromFile(String ruta) throws FileNotFoundException, ArchivoIncorrectoException {
     File archivo = new File(ruta);
     Scanner scanner = new Scanner(archivo);
     String[] fila;
 
-    for (int f = 0; scanner.hasNextLine(); f++) {
-      fila = scanner.nextLine().split(_separador);
+    try {
+      for (int f = 0; scanner.hasNextLine(); f++) {
+        fila = scanner.nextLine().split(_separador);
 
-      if (fila.length != _tablero_size) {
-        scanner.close();
-        String msg = String.format("Numero de columnas incorrecto en la linea %d de %s", (f + 1), ruta);
-        throw new ArchivoIncorrectoException(msg);
-      }
-
-      for (int c = 0; c < fila.length; c++)
-        try {
-          celdas[f][c] = Integer.parseInt(fila[c]);
-        } catch (NumberFormatException e) {
-          String msg = String.format("No se pudo reconocer %s (%d,%d) de %s", fila[c], f, c, ruta);
-          throw new ArchivoIncorrectoException(msg);
-        } finally {
+        if (fila.length != _tablero_size) {
           scanner.close();
+          String msg = String.format("Numero de columnas incorrecto en la linea %d de %s", (f + 1), ruta);
+          throw new ArchivoIncorrectoException(msg);
         }
-    }
 
-    scanner.close();
+        for (int c = 0; c < fila.length; c++)
+          celdas[f][c] = Integer.parseInt(fila[c]);
+
+      }
+    } catch (NumberFormatException e) {
+      String msg = String.format("No se pudo interpretar un elemento del archivo %s", ruta);
+      throw new ArchivoIncorrectoException(msg);
+    } finally {
+      scanner.close();
+    }
   }
 
   public String toString() {

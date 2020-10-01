@@ -33,4 +33,24 @@ public class tester {
   public void noExcepcionesAlLeerCorrecto() throws ArchivoIncorrectoException, FileNotFoundException {
     tablero.readFromFile(rutaArchivo + "archivoCorrecto.txt");
   }
+
+  private void inicializarArr(Integer arr[][]) {
+    for (int f = 0; f < arr.length; f++) {
+      for (int c = 0; c < arr[0].length; c++)
+        arr[f][c] = (c + f) % 10;
+    }
+  }
+
+  @Test
+  public void leeCorrectamente() throws ArchivoIncorrectoException, FileNotFoundException {
+    Integer[][] arr = { { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+        { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+        { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, };
+    // inicializarArr(arr);
+    tablero.readFromFile(rutaArchivo + "archivoCorrecto.txt");
+    
+    for (int f = 0; f < 9; f++)
+      for (int c = 0; c < 9; c++)
+        assertEquals((int) arr[f][c], tablero.intAt(f, c));
+  }
 }
