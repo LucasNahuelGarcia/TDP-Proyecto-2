@@ -4,22 +4,41 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Modela el controlador de un tablero de sudoku
+ */
 public class TableroSudoku {
   private final String _separador = " ";
   private final int _tablero_size = 9;
-
   private Integer[][] celdas;
 
+  /**
+   * Crea un nuevo TableroSudoku
+   */
   public TableroSudoku() {
     celdas = new Integer[_tablero_size][_tablero_size];
   }
 
+  /**
+   * Devuelve el valor almacenado en la celda pasada por parámetro
+   * 
+   * @param f Fila de la celda consultada
+   * @param c Columna de la celda consultada
+   */
   public int intAt(int f, int c) {
     return celdas[f][c];
   }
 
-  public void readFromFile(String name) throws FileNotFoundException, ArchivoIncorrectoException {
-    File archivo = new File(name);
+  /**
+   * Lee de un archivo de texto que contendrá 9 filas de 9 números separados por
+   * un espacio.
+   * 
+   * @param ruta Ruta del archivo
+   * @throws FileNotFoundException En caso de no encontrar el archivo.
+   * @throws ArchivoIncorrectoException En caso de que el archivo no respete el formato.
+   */
+  public void readFromFile(String ruta) throws FileNotFoundException, ArchivoIncorrectoException {
+    File archivo = new File(ruta);
     Scanner scanner = new Scanner(archivo);
     String[] fila;
 
@@ -28,7 +47,7 @@ public class TableroSudoku {
 
       if (fila.length != _tablero_size) {
         scanner.close();
-        String msg = String.format("Numero de columnas incorrecto en la linea %d de %s", (f + 1), name);
+        String msg = String.format("Numero de columnas incorrecto en la linea %d de %s", (f + 1), ruta);
         throw new ArchivoIncorrectoException(msg);
       }
 
@@ -36,7 +55,7 @@ public class TableroSudoku {
         try {
           celdas[f][c] = Integer.parseInt(fila[c]);
         } catch (NumberFormatException e) {
-          String msg = String.format("No se pudo reconocer %s (%d,%d) de %s", fila[c], f, c, name);
+          String msg = String.format("No se pudo reconocer %s (%d,%d) de %s", fila[c], f, c, ruta);
           throw new ArchivoIncorrectoException(msg);
         } finally {
           scanner.close();
