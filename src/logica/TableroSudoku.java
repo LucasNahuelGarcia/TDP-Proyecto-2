@@ -14,6 +14,10 @@ public class TableroSudoku {
     celdas = new Integer[_tablero_size][_tablero_size];
   }
 
+  public int intAt(int f, int c) {
+    return celdas[f][c];
+  }
+
   public void readFromFile(String name) throws FileNotFoundException, ArchivoIncorrectoException {
     File archivo = new File(name);
     Scanner scanner = new Scanner(archivo);
