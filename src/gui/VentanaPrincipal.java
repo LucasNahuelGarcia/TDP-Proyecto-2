@@ -69,7 +69,7 @@ public class VentanaPrincipal extends JFrame {
 		setResizable(false);
 		setBackground(Color.BLACK);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 500);
+		setBounds(100, 100, 550, 550);
 		main = new JPanel();
 		main.setAlignmentX(CENTER_ALIGNMENT);
 		main.setAlignmentY(CENTER_ALIGNMENT);
@@ -80,6 +80,7 @@ public class VentanaPrincipal extends JFrame {
 
 		JPanel tablero = new JPanel();
 		tablero.setBackground(Color.DARK_GRAY);
+		tablero.setBounds(100, 100, 500, 500);
 		tablero.setBorder(new EmptyBorder(5, 5, 5, 5));
 		tablero.setAlignmentY(0.5f);
 		tablero.setAlignmentX(0.5f);
@@ -120,11 +121,12 @@ public class VentanaPrincipal extends JFrame {
 		for (int f = 0; f < casillas.length; f++) {
 			for (int c = 0; c < casillas[0].length; c++) {
 				casillas[f][c] = new JLabel();
+				casillas[f][c].setHorizontalAlignment(JLabel.CENTER);
+				casillas[f][c].setVerticalAlignment(JLabel.CENTER);
 				casillas[f][c].setBorder(getBorde_celda());
 				int num = tableroLogica.intAt(f, c);
 				casillas[f][c].setIcon(_getNumberIcon(c + 1));
 			}
-
 		}
 	}
 
@@ -132,9 +134,9 @@ public class VentanaPrincipal extends JFrame {
 		Border borde = BorderFactory.createLineBorder(Color.black);
 		return borde;
 	}
-	
+
 	public Border getBorde_celda() {
-		Border borde = BorderFactory.createLineBorder(Color.black);
+		Border borde = BorderFactory.createEmptyBorder();
 		return borde;
 	}
 
