@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private JPanel main;
 	private JPanel region_7;
-	private JLabel[][] casillas;
+	private static JLabel[][] casillas;
 	private JPanel[][] regiones;
 	private static Color c_background = Color.BLACK;
 	private static TableroSudoku tableroLogica;
@@ -48,6 +48,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void run() {
 				try {
+
 					tableroLogica
 							.readFromFile("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
 					VentanaPrincipal frame = new VentanaPrincipal();
@@ -63,6 +64,7 @@ public class VentanaPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaPrincipal() {
+		crearCasillas();
 
 		setFont(new Font("Droid Naskh Shift Alt", Font.BOLD, 12));
 		setTitle("Sudoku");
@@ -85,11 +87,15 @@ public class VentanaPrincipal extends JFrame {
 		tablero.setAlignmentX(0.5f);
 		main.add(tablero, BorderLayout.CENTER);
 		tablero.setLayout(new GridLayout(3, 3, 5, 5));
-
-		crearCasillas();
 		crearRegiones(tablero);
-	}
 
+		JPanel panel = new JPanel();
+		main.add(panel, BorderLayout.SOUTH);
+
+		JLabel lblNewLabel = new JLabel("Aca va el reloj");
+		panel.add(lblNewLabel);
+
+	}
 
 	/**
 	 * Inicializa las regiones del tablero y les asigna sus casillas
@@ -128,7 +134,6 @@ public class VentanaPrincipal extends JFrame {
 			}
 		}
 	}
-
 
 	private ImageIcon _getNumberIcon(int num) {
 		String path = getClass().getResource("/num-tablero-" + num + ".png").getPath();
