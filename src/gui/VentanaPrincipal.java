@@ -84,8 +84,9 @@ public class VentanaPrincipal extends JFrame {
 		casillas = new JLabel[9][9];
 		for (int f = 0; f < casillas.length; f++) {
 			for (int c = 0; c < casillas[0].length; c++) {
-				casillas[f][c] = new JLabel(f + ":" + c);
-				casillas[f][c].setIcon(_getNumberIcon(f+1));
+				casillas[f][c] = new JLabel();
+				int num = tableroLogica.intAt(f, c);
+				casillas[f][c].setIcon(_getNumberIcon(num));
 				tablero.add(casillas[f][c]);
 			}
 		}
