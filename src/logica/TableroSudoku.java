@@ -65,7 +65,8 @@ public class TableroSudoku {
     }
   }
 
-  public String toString() {
+  @Override
+public String toString() {
     String str = "";
 
     for (int f = 0; f < celdas.length; f++) {
