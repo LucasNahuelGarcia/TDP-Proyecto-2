@@ -35,7 +35,7 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel region_7;
 	private JLabel[][] casillas;
 	private JPanel[][] regiones;
-
+	private static Color c_background = Color.BLACK;
 	private static TableroSudoku tableroLogica;
 
 	/**
@@ -67,7 +67,6 @@ public class VentanaPrincipal extends JFrame {
 		setFont(new Font("Droid Naskh Shift Alt", Font.BOLD, 12));
 		setTitle("Sudoku");
 		setResizable(false);
-		setBackground(Color.BLACK);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 550);
 		main = new JPanel();
@@ -79,17 +78,18 @@ public class VentanaPrincipal extends JFrame {
 		main.setLayout(new BorderLayout(0, 0));
 
 		JPanel tablero = new JPanel();
-		tablero.setBackground(Color.DARK_GRAY);
+		tablero.setBackground(c_background);
 		tablero.setBounds(100, 100, 500, 500);
 		tablero.setBorder(new EmptyBorder(5, 5, 5, 5));
 		tablero.setAlignmentY(0.5f);
 		tablero.setAlignmentX(0.5f);
 		main.add(tablero, BorderLayout.CENTER);
-		tablero.setLayout(new GridLayout(3, 3, 0, 0));
+		tablero.setLayout(new GridLayout(3, 3, 5, 5));
 
 		crearCasillas();
 		crearRegiones(tablero);
 	}
+
 
 	/**
 	 * Inicializa las regiones del tablero y les asigna sus casillas
@@ -103,7 +103,7 @@ public class VentanaPrincipal extends JFrame {
 		for (int fReg = 0; fReg < regiones.length; fReg++)
 			for (int cReg = 0; cReg < regiones[0].length; cReg++) {
 				regiones[fReg][cReg] = new JPanel(new GridLayout(3, 3, 0, 0));
-				regiones[fReg][cReg].setBorder(getBorde_region());
+				regiones[fReg][cReg].setBackground(c_background);
 				for (int fCel = 0; fCel < 3; fCel++)
 					for (int cCel = 0; cCel < 3; cCel++)
 						regiones[fReg][cReg].add(casillas[fCel + 3 * fReg][cCel + 3 * cReg]);
@@ -123,22 +123,12 @@ public class VentanaPrincipal extends JFrame {
 				casillas[f][c] = new JLabel();
 				casillas[f][c].setHorizontalAlignment(JLabel.CENTER);
 				casillas[f][c].setVerticalAlignment(JLabel.CENTER);
-				casillas[f][c].setBorder(getBorde_celda());
 				int num = tableroLogica.intAt(f, c);
-				casillas[f][c].setIcon(_getNumberIcon(c + 1));
+				casillas[f][c].setIcon(_getNumberIcon(num));
 			}
 		}
 	}
 
-	public Border getBorde_region() {
-		Border borde = BorderFactory.createLineBorder(Color.black);
-		return borde;
-	}
-
-	public Border getBorde_celda() {
-		Border borde = BorderFactory.createEmptyBorder();
-		return borde;
-	}
 
 	private ImageIcon _getNumberIcon(int num) {
 		String path = getClass().getResource("/num-tablero-" + num + ".png").getPath();
