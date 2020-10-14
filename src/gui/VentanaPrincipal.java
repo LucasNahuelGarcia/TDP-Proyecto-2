@@ -7,10 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+import logica.ArchivoIncorrectoException;
+import logica.TableroSudoku;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.Border;
 import java.awt.GridLayout;
+import java.io.FileNotFoundException;
+
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.JLabel;
@@ -23,22 +29,20 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel main;
 	private JPanel region_7;
 	private JLabel[][] casillas;
+	private static TableroSudoku tableroLogica;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		tableroLogica = new TableroSudoku();
+		
+
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					UIManager.setLookAndFeel(new NimbusLookAndFeel());
-				} catch (Exception ex) {
-					System.err.println("Failed to initialize LaF");
-				}
-
-				try {
-
+					tableroLogica.readFromFile("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
 					VentanaPrincipal frame = new VentanaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -81,7 +85,7 @@ public class VentanaPrincipal extends JFrame {
 		for (int f = 0; f < casillas.length; f++) {
 			for (int c = 0; c < casillas[0].length; c++) {
 				casillas[f][c] = new JLabel(f + ":" + c);
-				casillas[f][c].setIcon(_getNumberIcon(2));
+				casillas[f][c].setIcon(_getNumberIcon(f+1));
 				tablero.add(casillas[f][c]);
 			}
 		}
