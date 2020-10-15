@@ -38,6 +38,8 @@ import javax.swing.JComponent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -46,23 +48,22 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel main;
 	private Celda casillaActiva;
 	private TableroSudoku tableroLogica;
-	
+
 	private JPanel[][] regiones;
 	private Celda[][] casillas;
 	private Color c_background = Color.BLACK;
 
 	/**
-	 * Launch the application.	private TableroSudoku tableroLogica;
+	 * Launch the application. private TableroSudoku tableroLogica;
 	 */
 	public static void main(String[] args) {
-		TableroSudoku logica= new TableroSudoku();
+		TableroSudoku logica = new TableroSudoku();
 
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					logica
-							.readFromFile("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
+					logica.readFromFile("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
 					VentanaPrincipal frame = new VentanaPrincipal(logica);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -77,7 +78,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public VentanaPrincipal(TableroSudoku logica) {
 		tableroLogica = logica;
-		
+
 		crearCasillas();
 
 		setFont(new Font("Droid Naskh Shift Alt", Font.BOLD, 12));
@@ -94,6 +95,7 @@ public class VentanaPrincipal extends JFrame {
 		main.setLayout(new BorderLayout(0, 0));
 
 		JPanel tablero = new JPanel();
+		
 		tablero.setBackground(c_background);
 		tablero.setBounds(100, 100, 500, 500);
 		tablero.setAlignmentY(0.5f);
@@ -121,7 +123,7 @@ public class VentanaPrincipal extends JFrame {
 
 		for (int fReg = 0; fReg < regiones.length; fReg++)
 			for (int cReg = 0; cReg < regiones[0].length; cReg++) {
-				regiones[fReg][cReg] = new JPanel(new GridLayout(3,3,0,0));
+				regiones[fReg][cReg] = new JPanel(new GridLayout(3, 3, 0, 0));
 				regiones[fReg][cReg].setBackground(c_background);
 				// Agregamos las celdas correspondientes
 				for (int fCel = 0; fCel < 3; fCel++)
@@ -137,14 +139,26 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private void crearCasillas() {
 		casillas = new Celda[9][9];
-		
+
 		for (int f = 0; f < casillas.length; f++) {
 			for (int c = 0; c < casillas[0].length; c++) {
-				casillas[f][c] = new Celda(f,c, tableroLogica.intAt(f, c));
+				casillas[f][c] = new Celda(f, c, tableroLogica.intAt(f, c));
 				casillas[f][c].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						setCasillaActiva(((Celda) e.getComponent()));
+					}
+				});
+				casillas[f][c].addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						char key = e.getKeyChar();
+						int val;
+						if (casillaActiva != null && Character.isDigit(key)) {
+							val = Character.getNumericValue(key);
+							if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(), val))
+								casillaActiva.setValor(val);
+						}
 					}
 				});
 			}

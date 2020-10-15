@@ -30,8 +30,10 @@ public class TableroSudoku {
   }
   
   public boolean setCasillaAt(int f, int c, int val) {
+	  boolean correcto = val > 0 && val < 10;
+			  if(correcto)
 	  celdas[f][c] = val;
-	  return true;
+	  return correcto;
   }
 
   /**
