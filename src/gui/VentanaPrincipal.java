@@ -95,7 +95,7 @@ public class VentanaPrincipal extends JFrame {
 		main.setLayout(new BorderLayout(0, 0));
 
 		JPanel tablero = new JPanel();
-		
+
 		tablero.setBackground(c_background);
 		tablero.setBounds(100, 100, 500, 500);
 		tablero.setAlignmentY(0.5f);
@@ -152,17 +152,58 @@ public class VentanaPrincipal extends JFrame {
 				casillas[f][c].addKeyListener(new KeyAdapter() {
 					@Override
 					public void keyTyped(KeyEvent e) {
-						char key = e.getKeyChar();
 						int val;
-						if (casillaActiva != null && Character.isDigit(key)) {
-							val = Character.getNumericValue(key);
-							if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(), val))
-								casillaActiva.setValor(val);
+						if (casillaActiva != null)
+							if (Character.isDigit(e.getKeyChar())) {
+								val = Character.getNumericValue(e.getKeyChar());
+								if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(),
+										val))
+									casillaActiva.setValor(val);
+							}
+
+					}
+
+					@Override
+					public void keyPressed(KeyEvent e) {
+						int f, c;
+						if (casillaActiva != null) {
+							f = casillaActiva.getFila();
+							c = casillaActiva.getColumna();
+
+							switch (e.getKeyCode()) {
+							case KeyEvent.VK_RIGHT:
+								c++;
+								break;
+							case KeyEvent.VK_LEFT:
+								c--;
+								break;
+							case KeyEvent.VK_UP:
+								f--;
+								break;
+							case KeyEvent.VK_DOWN:
+								f++;
+								break;
+							}
+
+							moverActivaAPos(f, c);
 						}
 					}
 				});
 			}
 		}
+
+	}
+
+	private void moverActivaAPos(int f, int c) {
+		if (f > casillas.length - 1)
+			f = casillas.length - 1;
+		if (f < 0)
+			f = 0;
+		if (c > casillas[0].length - 1)
+			c = casillas.length - 1;
+		if (c < 0)
+			c = 0;
+		setCasillaActiva(casillas[f][c]);
 	}
 
 	private void setCasillaActiva(Celda nuevaActiva) {
