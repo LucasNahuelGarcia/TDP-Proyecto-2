@@ -28,6 +28,11 @@ public class TableroSudoku {
   public int intAt(int f, int c) {
     return celdas[f][c];
   }
+  
+  public boolean setCasillaAt(int f, int c, int val) {
+	  celdas[f][c] = val;
+	  return true;
+  }
 
   /**
    * Lee de un archivo de texto que contendrá 9 filas de 9 números separados por
