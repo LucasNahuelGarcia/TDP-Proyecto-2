@@ -15,28 +15,31 @@ class Celda extends JButton {
 	private int fila, columna;
 	private Integer valor;
 	private boolean activa;
+	private ImageProvider imageProvider;
 
-	Celda(int fila, int columna, Integer valor) {
+	Celda(ImageProvider imageProvider, int fila, int columna, Integer valor) {
+		activa = false;
+		this.imageProvider = imageProvider;
 		this.fila = fila;
 		this.columna = columna;
 		this.valor = valor;
-		activa = false;
 		this.quitarFoco();
 		this.setHorizontalAlignment(JButton.CENTER);
 		this.setVerticalAlignment(JButton.CENTER);
 		this.setBorder(BorderFactory.createEmptyBorder());
+
 		// Si el valor es nulo, consideramos a la casilla no editable
 		if (valor != null)
-			this.setIcon(getIconoDeNumero(valor, 10));
+			this.setIcon(imageProvider.getIconoDeCelda(valor));
 	}
 
-	Celda(int fila, int columna) {
-		this(fila, columna, null);
+	Celda(ImageProvider imageProvider, int fila, int columna) {
+		this(imageProvider, fila, columna, null);
 	}
 
 	public void setValor(int val) {
 		valor = val;
-		this.setIcon(getIconoDeNumero(val, 10));
+		this.setIcon(imageProvider.getIconoDeCelda(val));
 	}
 
 	public int getValor() {
@@ -50,27 +53,13 @@ class Celda extends JButton {
 	public int getColumna() {
 		return columna;
 	}
-	
+
 	public void darFoco() {
 		this.setBackground(Color.blue);
 	}
-	
+
 	public void quitarFoco() {
 		this.setBackground(Color.black);
 	}
 
-	private ImageIcon getIconoDeNumero(int num, int size) {
-		ImageIcon img = null;
-		String path;
-		try {// Guardamos la imagen en un buffer, lo que nos permite escalarla
-			path = getClass().getResource("/num-tablero-" + num + ".png").getPath();
-			Image dimg = ImageIO.read(new File(path));
-			//dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
-
-			img = new ImageIcon(dimg);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return img;
 	}
-}

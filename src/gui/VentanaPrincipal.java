@@ -52,19 +52,21 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel[][] regiones;
 	private Celda[][] casillas;
 	private Color c_background = Color.BLACK;
+	
+	private ImageProvider imageProvider;
 
 	/**
 	 * Launch the application. private TableroSudoku tableroLogica;
 	 */
 	public static void main(String[] args) {
 		TableroSudoku logica = new TableroSudoku();
-
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
+					ImageProvider imageProvider = new ImageProvider();
 					logica.readFromFile("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
-					VentanaPrincipal frame = new VentanaPrincipal(logica);
+					VentanaPrincipal frame = new VentanaPrincipal(logica, imageProvider);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -76,7 +78,8 @@ public class VentanaPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPrincipal(TableroSudoku logica) {
+	public VentanaPrincipal(TableroSudoku logica, ImageProvider imageProvider) {
+		this.imageProvider = imageProvider;
 		tableroLogica = logica;
 
 		crearCasillas();
@@ -142,7 +145,7 @@ public class VentanaPrincipal extends JFrame {
 
 		for (int f = 0; f < casillas.length; f++) {
 			for (int c = 0; c < casillas[0].length; c++) {
-				casillas[f][c] = new Celda(f, c, tableroLogica.intAt(f, c));
+				casillas[f][c] = new Celda(imageProvider,f, c, tableroLogica.intAt(f, c));
 				casillas[f][c].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
