@@ -11,22 +11,26 @@ class ImageProvider {
 	private ImageIcon[] numeros_celda;
 
 	public ImageProvider() {
+		cargarIconosCeldaActiva(10);
+	}
+
+	private void cargarIconosCeldaActiva(int cantElementos) {
 		String path;
-		int cantElementos = 10;
 		numeros_celda = new ImageIcon[cantElementos];
-		for (int i = 0; i < cantElementos; i++)
-			try {
+		try {
+			for (int i = 0; i < cantElementos; i++) {
 				// Guardamos la imagen en un buffer, lo que nos permite escalarla
 				// Se toma la convención de que el sprite num-tablero-0 es el sprite de la
 				// casilla vacia.
-				path = getClass().getResource("/num-tablero-" + i + ".png").getPath();
+				path = getClass().getResource("/casilla-activa-" + i + ".png").getPath();
 				Image dimg = ImageIO.read(new File(path));
 				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
 
 				numeros_celda[i] = new ImageIcon(dimg);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ImageIcon getIconoDeCelda(int num) {
