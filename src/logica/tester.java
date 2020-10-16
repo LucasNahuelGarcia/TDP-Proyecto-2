@@ -17,21 +17,21 @@ public class tester {
   @Test
   public void excepcionesDeLeerArchivo() {
     assertThrows(FileNotFoundException.class, () -> {
-      tablero.readFromFile(rutaArchivo + "archivoQueNoExiste.txt");
+      tablero.leerArchivo(rutaArchivo + "archivoQueNoExiste.txt");
     });
 
     assertThrows(ArchivoIncorrectoException.class, () -> {
-      tablero.readFromFile(rutaArchivo + "archivoIncorrecto-1.txt");
+      tablero.leerArchivo(rutaArchivo + "archivoIncorrecto-1.txt");
     });
 
     assertThrows(ArchivoIncorrectoException.class, () -> {
-      tablero.readFromFile(rutaArchivo + "archivoIncorrecto-2.txt");
+      tablero.leerArchivo(rutaArchivo + "archivoIncorrecto-2.txt");
     });
   }
 
   @Test
   public void noExcepcionesAlLeerCorrecto() throws ArchivoIncorrectoException, FileNotFoundException {
-    tablero.readFromFile(rutaArchivo + "archivoCorrecto.txt");
+    tablero.leerArchivo(rutaArchivo + "archivoCorrecto.txt");
   }
 
   private void inicializarArr(Integer arr[][]) {
@@ -47,7 +47,7 @@ public class tester {
         { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
         { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, };
     // inicializarArr(arr);
-    tablero.readFromFile(rutaArchivo + "archivoCorrecto.txt");
+    tablero.leerArchivo(rutaArchivo + "archivoCorrecto.txt");
     
     for (int f = 0; f < 9; f++)
       for (int c = 0; c < 9; c++)

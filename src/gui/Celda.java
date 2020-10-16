@@ -14,11 +14,9 @@ class Celda extends JButton {
 	private static final long serialVersionUID = 1L;
 	private int fila, columna;
 	private Integer valor;
-	private boolean activa;
 	private ImageProvider imageProvider;
 
 	Celda(ImageProvider imageProvider, int fila, int columna, Integer valor) {
-		activa = false;
 		this.imageProvider = imageProvider;
 		this.fila = fila;
 		this.columna = columna;

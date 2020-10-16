@@ -65,7 +65,7 @@ public class VentanaPrincipal extends JFrame {
 			public void run() {
 				try {
 					ImageProvider imageProvider = new ImageProvider();
-					logica.readFromFile("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
+					logica.leerArchivo("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
 					VentanaPrincipal frame = new VentanaPrincipal(logica, imageProvider);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -138,7 +138,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Inicializa el arreglo de casillas de 9x9
+	 * Inicializa el arreglo de celdas de 9x9
 	 */
 	private void crearCasillas() {
 		casillas = new Celda[9][9];

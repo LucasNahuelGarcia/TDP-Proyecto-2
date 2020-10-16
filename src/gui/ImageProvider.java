@@ -35,6 +35,7 @@ class ImageProvider {
 			e.printStackTrace();
 		}
 	}
+
 	private void cargarIconosCeldaNoEditable(int cantElementos) {
 		String path;
 		Image dimg;
@@ -48,13 +49,12 @@ class ImageProvider {
 				dimg = ImageIO.read(new File(path));
 				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
 
-				numerosCeldaNoEditable[i] = new ImageIcon(dimg);
+				numerosCeldaNoEditable[i-1] = new ImageIcon(dimg);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 
 	public ImageIcon getIconoDeCelda(int num) {
 		return numerosCeldaEditable[num];
