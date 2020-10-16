@@ -52,7 +52,7 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel[][] regiones;
 	private Celda[][] casillas;
 	private Color c_background = Color.BLACK;
-	
+
 	private ImageProvider imageProvider;
 
 	/**
@@ -145,56 +145,67 @@ public class VentanaPrincipal extends JFrame {
 
 		for (int f = 0; f < casillas.length; f++) {
 			for (int c = 0; c < casillas[0].length; c++) {
-				casillas[f][c] = new Celda(imageProvider,f, c, tableroLogica.intAt(f, c));
-				casillas[f][c].addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						setCasillaActiva(((Celda) e.getComponent()));
-					}
-				});
-				casillas[f][c].addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyTyped(KeyEvent e) {
-						int val;
-						if (casillaActiva != null)
-							if (Character.isDigit(e.getKeyChar())) {
-								val = Character.getNumericValue(e.getKeyChar());
-								if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(),
-										val))
-									casillaActiva.setValor(val);
-							}
-
-					}
-
-					@Override
-					public void keyPressed(KeyEvent e) {
-						int f, c;
-						if (casillaActiva != null) {
-							f = casillaActiva.getFila();
-							c = casillaActiva.getColumna();
-
-							switch (e.getKeyCode()) {
-							case KeyEvent.VK_RIGHT:
-								c++;
-								break;
-							case KeyEvent.VK_LEFT:
-								c--;
-								break;
-							case KeyEvent.VK_UP:
-								f--;
-								break;
-							case KeyEvent.VK_DOWN:
-								f++;
-								break;
-							}
-
-							moverActivaAPos(f, c);
-						}
-					}
-				});
+				casillas[f][c] = crearCelda(f, c, tableroLogica.intAt(f, c));
 			}
 		}
 
+	}
+
+	private Celda crearCelda(int f, int c, int val) {
+		Celda nueva;
+		if (tableroLogica.esEditable(f, c)) {
+			nueva = new Celda(imageProvider, f, c, tableroLogica.intAt(f, c));
+
+			nueva.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					int val;
+					if (casillaActiva != null && Character.isDigit(e.getKeyChar())) {
+						val = Character.getNumericValue(e.getKeyChar());
+						if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(), val))
+							casillaActiva.setValor(val);
+					}
+				}
+			});
+
+		} else {
+			nueva = new CeldaNoEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
+		}
+		nueva.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setCasillaActiva(((Celda) e.getComponent()));
+			}
+		});
+		nueva.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int f, c;
+				if (casillaActiva != null) {
+					f = casillaActiva.getFila();
+					c = casillaActiva.getColumna();
+
+					switch (e.getKeyCode()) {
+					case KeyEvent.VK_RIGHT:
+						c++;
+						break;
+					case KeyEvent.VK_LEFT:
+						c--;
+						break;
+					case KeyEvent.VK_UP:
+						f--;
+						break;
+					case KeyEvent.VK_DOWN:
+						f++;
+						break;
+					}
+
+					moverActivaAPos(f, c);
+				}
+			}
+		});
+
+		return nueva;
 	}
 
 	private void moverActivaAPos(int f, int c) {

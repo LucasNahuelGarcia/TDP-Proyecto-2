@@ -60,4 +60,4 @@ class Celda extends JButton {
 		this.setBackground(Color.black);
 	}
 
-	}
+}

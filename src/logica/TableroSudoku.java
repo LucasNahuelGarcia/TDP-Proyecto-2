@@ -12,14 +12,14 @@ public class TableroSudoku {
 	private final String _separador = " ";
 	private final int _tablero_size = 9;
 	private Integer[][] celdas;
-	private Boolean[][] esEditable;
+	private boolean[][] esEditable;
 
 	/**
 	 * Crea un nuevo TableroSudoku
 	 */
 	public TableroSudoku() {
 		celdas = new Integer[_tablero_size][_tablero_size];
-		esEditable = new Boolean[_tablero_size][_tablero_size];
+		esEditable = new boolean[_tablero_size][_tablero_size];
 	}
 
 	/**
@@ -81,5 +81,15 @@ public class TableroSudoku {
 		} finally {
 			scanner.close();
 		}
+	}
+
+	/**
+	 * Permite verificar si una celda es editable o no.
+	 * @param f fila de la celda.
+	 * @param c columna de la celda.
+	 * @return verdadero si la celda es editable, falso si no.
+	 */
+	public boolean esEditable(int f, int c) {
+		return esEditable[f][c];
 	}
 }
