@@ -60,10 +60,6 @@ public class VentanaPrincipal extends JFrame {
 
 	private ImageProvider imageProvider;
 
-	private enum ArrowKey {
-		UP, DOWN, LEFT, RIGHT
-	}
-
 	/**
 	 * Launch the application. private TableroSudoku tableroLogica;
 	 */
@@ -206,7 +202,7 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		});
-
+		
 		inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moverDown");
 		tablero.getActionMap().put("moverDown", new AbstractAction() {
 			@Override
@@ -225,19 +221,19 @@ public class VentanaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (casillaActiva != null) {
 					int f = casillaActiva.getFila();
-					int c = (casillaActiva.getColumna() - 1 + casillas[0].length) % casillas[0].length;
+					int c = (casillaActiva.getColumna()-1+casillas[0].length) % casillas[0].length;
 					setCasillaActiva(casillas[f][c]);
 				}
 			}
 		});
-
+		
 		inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moverRight");
 		tablero.getActionMap().put("moverRight", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (casillaActiva != null) {
 					int f = casillaActiva.getFila();
-					int c = (casillaActiva.getColumna() + 1) % casillas[0].length;
+					int c = (casillaActiva.getColumna()+1) % casillas[0].length;
 					setCasillaActiva(casillas[f][c]);
 				}
 			}
