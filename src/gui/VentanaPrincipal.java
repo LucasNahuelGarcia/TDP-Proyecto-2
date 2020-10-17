@@ -42,6 +42,7 @@ import javax.swing.JComponent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -182,12 +183,12 @@ public class VentanaPrincipal extends JFrame {
 		} else {
 			nueva = new CeldaNoEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
 		}
-		nueva.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				setCasillaActiva(((Celda) e.getComponent()));
+		nueva.addActionListener((ActionListener) new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setCasillaActiva((Celda) e.getSource());
 			}
 		});
-
 		return nueva;
 	}
 
@@ -211,7 +212,6 @@ public class VentanaPrincipal extends JFrame {
 		if (casillaActiva != null)
 			casillaActiva.quitarFoco();
 
-		nuevaActiva.darFoco();
 		nuevaActiva.grabFocus();
 		casillaActiva = nuevaActiva;
 	}

@@ -10,7 +10,8 @@ public class CeldaNoEditable extends Celda {
 	}
 
 	@Override
-	public void darFoco() {
+	public void grabFocus() {
+		super.grabFocus();
 		this.setBackground(Color.gray);
 	}
 	

@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 abstract class Celda extends JButton {
 	private static final long serialVersionUID = 1L;
 	protected int fila, columna;
@@ -26,7 +27,6 @@ abstract class Celda extends JButton {
 		this.setBorder(BorderFactory.createEmptyBorder());
 	}
 
-
 	public void setValor(int val) {
 		valor = val;
 	}
@@ -43,11 +43,7 @@ abstract class Celda extends JButton {
 		return columna;
 	}
 
-	public void darFoco() {
-		this.grabFocus();
-	}
-
 	public void quitarFoco() {
-			this.setBackground(Color.black);
+		this.setBackground(Color.black);
 	}
 }
