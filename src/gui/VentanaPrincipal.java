@@ -168,7 +168,6 @@ public class VentanaPrincipal extends JFrame {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					int val;
-					System.out.println("holis, estoiy en el trigger");
 					if (casillaActiva != null && Character.isDigit(e.getKeyChar())) {
 						val = Character.getNumericValue(e.getKeyChar());
 						if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(), val))
