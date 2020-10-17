@@ -158,6 +158,14 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
+	/**
+	 * Inicializa una celda y la configura correctamente.
+	 * 
+	 * @param f   fila de la celda.
+	 * @param c   columna de la celda.
+	 * @param val valor de la celda.
+	 * @return Una celda ya configurada.
+	 */
 	private Celda crearCelda(int f, int c, int val) {
 		Celda nueva;
 		if (tableroLogica.esEditable(f, c)) {
@@ -188,9 +196,15 @@ public class VentanaPrincipal extends JFrame {
 		return nueva;
 	}
 
+	/**
+	 * Establece los KeyBindings que permiten moverse dentro del sudoku.
+	 * 
+	 * @param tablero El objeto al que se van a asignar los KeyBindings.
+	 */
 	private void establecerKeyBindingsTablero(JPanel tablero) {
 		InputMap inputMap = tablero.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		inputMap.put(KeyStroke.getKeyStroke("UP"), "moverUp");
+
 		tablero.getActionMap().put("moverUp", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -201,7 +215,7 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		});
-		
+
 		inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moverDown");
 		tablero.getActionMap().put("moverDown", new AbstractAction() {
 			@Override
@@ -220,25 +234,30 @@ public class VentanaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (casillaActiva != null) {
 					int f = casillaActiva.getFila();
-					int c = (casillaActiva.getColumna()-1+casillas[0].length) % casillas[0].length;
+					int c = (casillaActiva.getColumna() - 1 + casillas[0].length) % casillas[0].length;
 					setCasillaActiva(casillas[f][c]);
 				}
 			}
 		});
-		
+
 		inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moverRight");
 		tablero.getActionMap().put("moverRight", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (casillaActiva != null) {
 					int f = casillaActiva.getFila();
-					int c = (casillaActiva.getColumna()+1) % casillas[0].length;
+					int c = (casillaActiva.getColumna() + 1) % casillas[0].length;
 					setCasillaActiva(casillas[f][c]);
 				}
 			}
 		});
 	}
 
+	/**
+	 * Establece la casilla pasada como parámetro como activa.
+	 * 
+	 * @param nuevaActiva nueva casilla activa.
+	 */
 	private void setCasillaActiva(Celda nuevaActiva) {
 		if (casillaActiva != null)
 			casillaActiva.quitarFoco();
