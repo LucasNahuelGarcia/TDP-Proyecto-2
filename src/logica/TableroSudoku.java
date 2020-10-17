@@ -3,6 +3,7 @@ package logica;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -85,11 +86,32 @@ public class TableroSudoku {
 
 	/**
 	 * Permite verificar si una celda es editable o no.
+	 * 
 	 * @param f fila de la celda.
 	 * @param c columna de la celda.
 	 * @return verdadero si la celda es editable, falso si no.
 	 */
 	public boolean esEditable(int f, int c) {
 		return esEditable[f][c];
+	}
+
+	/**
+	 * Elimina el valor de celdas al azar especificado en cantidad de cada región,
+	 * haciendolas editables.
+	 * 
+	 * @param cantidad cantidad de celdas a eliminar por región.
+	 */
+	public void eliminarCeldas(int cantidad) {
+		Random random = new Random();
+		for (int f = 0; f < 3; f++)
+			for (int c = 0; c < 3; c++)
+				for (int i = 0; i < cantidad; i++) {
+					int fEliminar = random.nextInt((3 * f + 3) - 3 * f) + 3 * f;
+					int cEliminar = random.nextInt((3 * c + 3) - 3 * c) + 3 * c;
+					esEditable[fEliminar][cEliminar] = true;
+					// Usamos como convencion que 0 es una casilla vacia.
+					celdas[fEliminar][cEliminar] = 0;
+				}
+
 	}
 }

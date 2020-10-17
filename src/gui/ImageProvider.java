@@ -56,8 +56,11 @@ class ImageProvider {
 		}
 	}
 
-	public ImageIcon getIconoDeCelda(int num) {
+	public ImageIcon getIconoDeCeldaEditable(int num) {
 		return numerosCeldaEditable[num];
 	}
-
+	
+	public ImageIcon getIconoDeCeldaNoEditable(int num) {
+		return numerosCeldaNoEditable[num-1];
+	}
 }

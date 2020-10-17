@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
@@ -31,13 +32,16 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -55,6 +59,10 @@ public class VentanaPrincipal extends JFrame {
 
 	private ImageProvider imageProvider;
 
+	private enum ArrowKey {
+		UP, DOWN, LEFT, RIGHT
+	}
+
 	/**
 	 * Launch the application. private TableroSudoku tableroLogica;
 	 */
@@ -66,6 +74,7 @@ public class VentanaPrincipal extends JFrame {
 				try {
 					ImageProvider imageProvider = new ImageProvider();
 					logica.leerArchivo("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
+					logica.eliminarCeldas(3);
 					VentanaPrincipal frame = new VentanaPrincipal(logica, imageProvider);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -106,6 +115,7 @@ public class VentanaPrincipal extends JFrame {
 		main.add(tablero, BorderLayout.CENTER);
 		tablero.setLayout(new GridLayout(3, 3, 5, 5));
 		crearRegiones(tablero);
+		establecerKeyBindingsTablero(tablero);
 
 		JPanel panel = new JPanel();
 		main.add(panel, BorderLayout.SOUTH);
@@ -154,12 +164,13 @@ public class VentanaPrincipal extends JFrame {
 	private Celda crearCelda(int f, int c, int val) {
 		Celda nueva;
 		if (tableroLogica.esEditable(f, c)) {
-			nueva = new Celda(imageProvider, f, c, tableroLogica.intAt(f, c));
+			nueva = new CeldaEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
 
 			nueva.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					int val;
+					System.out.println("holis, estoiy en el trigger");
 					if (casillaActiva != null && Character.isDigit(e.getKeyChar())) {
 						val = Character.getNumericValue(e.getKeyChar());
 						if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(), val))
@@ -172,52 +183,28 @@ public class VentanaPrincipal extends JFrame {
 			nueva = new CeldaNoEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
 		}
 		nueva.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				setCasillaActiva(((Celda) e.getComponent()));
-			}
-		});
-		nueva.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int f, c;
-				if (casillaActiva != null) {
-					f = casillaActiva.getFila();
-					c = casillaActiva.getColumna();
-
-					switch (e.getKeyCode()) {
-					case KeyEvent.VK_RIGHT:
-						c++;
-						break;
-					case KeyEvent.VK_LEFT:
-						c--;
-						break;
-					case KeyEvent.VK_UP:
-						f--;
-						break;
-					case KeyEvent.VK_DOWN:
-						f++;
-						break;
-					}
-
-					moverActivaAPos(f, c);
-				}
 			}
 		});
 
 		return nueva;
 	}
 
-	private void moverActivaAPos(int f, int c) {
-		if (f > casillas.length - 1)
-			f = casillas.length - 1;
-		if (f < 0)
-			f = 0;
-		if (c > casillas[0].length - 1)
-			c = casillas.length - 1;
-		if (c < 0)
-			c = 0;
-		setCasillaActiva(casillas[f][c]);
+	private void establecerKeyBindingsTablero(JPanel tablero) {
+		KeyStroke key = KeyStroke.getKeyStroke("UP");
+		InputMap inputMap = tablero.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		inputMap.put(key, "moverUp");
+		tablero.getActionMap().put("moverUp", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (casillaActiva != null) {
+					int f = casillaActiva.getFila();
+					int c = casillaActiva.getColumna();
+					setCasillaActiva(casillas[f - 1][c]);
+				}
+			}
+		});
 	}
 
 	private void setCasillaActiva(Celda nuevaActiva) {
@@ -225,6 +212,7 @@ public class VentanaPrincipal extends JFrame {
 			casillaActiva.quitarFoco();
 
 		nuevaActiva.darFoco();
+		nuevaActiva.grabFocus();
 		casillaActiva = nuevaActiva;
 	}
 }

@@ -9,12 +9,11 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
-class Celda extends JButton {
+abstract class Celda extends JButton {
 	private static final long serialVersionUID = 1L;
-	private int fila, columna;
-	private Integer valor;
-	private ImageProvider imageProvider;
+	protected int fila, columna;
+	protected Integer valor;
+	protected ImageProvider imageProvider;
 
 	Celda(ImageProvider imageProvider, int fila, int columna, Integer valor) {
 		this.imageProvider = imageProvider;
@@ -25,19 +24,11 @@ class Celda extends JButton {
 		this.setHorizontalAlignment(JButton.CENTER);
 		this.setVerticalAlignment(JButton.CENTER);
 		this.setBorder(BorderFactory.createEmptyBorder());
-
-		// Si el valor es nulo, consideramos a la casilla no editable
-		if (valor != null)
-			this.setIcon(imageProvider.getIconoDeCelda(valor));
 	}
 
-	Celda(ImageProvider imageProvider, int fila, int columna) {
-		this(imageProvider, fila, columna, null);
-	}
 
 	public void setValor(int val) {
 		valor = val;
-		this.setIcon(imageProvider.getIconoDeCelda(val));
 	}
 
 	public int getValor() {
@@ -53,11 +44,10 @@ class Celda extends JButton {
 	}
 
 	public void darFoco() {
-		this.setBackground(Color.blue);
+		this.grabFocus();
 	}
 
 	public void quitarFoco() {
-		this.setBackground(Color.black);
+			this.setBackground(Color.black);
 	}
-
 }
