@@ -167,6 +167,7 @@ public class VentanaPrincipal extends JFrame {
 		if (tableroLogica.esEditable(f, c)) {
 			nueva = new CeldaEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
 
+			// si es editable, le agregamos un listener para editar el valor de la celda.
 			nueva.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -193,16 +194,51 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void establecerKeyBindingsTablero(JPanel tablero) {
-		KeyStroke key = KeyStroke.getKeyStroke("UP");
 		InputMap inputMap = tablero.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		inputMap.put(key, "moverUp");
+		inputMap.put(KeyStroke.getKeyStroke("UP"), "moverUp");
 		tablero.getActionMap().put("moverUp", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (casillaActiva != null) {
-					int f = casillaActiva.getFila();
+					int f = (casillaActiva.getFila() - 1 + casillas.length) % casillas.length;
 					int c = casillaActiva.getColumna();
-					setCasillaActiva(casillas[f - 1][c]);
+					setCasillaActiva(casillas[f][c]);
+				}
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moverDown");
+		tablero.getActionMap().put("moverDown", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (casillaActiva != null) {
+					int f = (casillaActiva.getFila() + 1) % casillas.length;
+					int c = casillaActiva.getColumna();
+					setCasillaActiva(casillas[f][c]);
+				}
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moverLeft");
+		tablero.getActionMap().put("moverLeft", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (casillaActiva != null) {
+					int f = casillaActiva.getFila();
+					int c = (casillaActiva.getColumna() - 1 + casillas[0].length) % casillas[0].length;
+					setCasillaActiva(casillas[f][c]);
+				}
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moverRight");
+		tablero.getActionMap().put("moverRight", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (casillaActiva != null) {
+					int f = casillaActiva.getFila();
+					int c = (casillaActiva.getColumna() + 1) % casillas[0].length;
+					setCasillaActiva(casillas[f][c]);
 				}
 			}
 		});
