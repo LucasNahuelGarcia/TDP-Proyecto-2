@@ -137,7 +137,7 @@ public class TableroSudoku {
 		// Verificamos la region
 		for (int f = fR; (f - fR) < 3; f++)
 			for (int c = cR; (c - cR) < 3; c++)
-				if (celdas[f][c] == valCelda)
+				if (celdas[f][c] == valCelda && !p.equals(new Posicion(f,c)))
 					conflictos.add(new Posicion(f, c));
 
 		return conflictos;

@@ -15,4 +15,17 @@ public class Posicion {
 	public int columna() {
 		return columna;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean equals = false;
+
+		try {
+			Posicion pos = (Posicion) obj;
+			equals = this.fila == pos.fila() && this.columna == pos.columna;
+		} catch (ClassCastException e) {
+			e.printStackTrace();
+		}
+		return equals;
+	}
 }
