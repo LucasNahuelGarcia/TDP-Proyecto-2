@@ -25,7 +25,7 @@ class ImageProvider {
 				// Guardamos la imagen en un buffer, lo que nos permite escalarla
 				// Se toma la convención de que el sprite num-tablero-0 es el sprite de la
 				// casilla vacia.
-				path = getClass().getResource("/casilla-editable-" + i + ".png").getPath();
+				path = getClass().getResource("/editables/casilla-editable-" + i + ".png").getPath();
 				dimg = ImageIO.read(new File(path));
 				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
 
@@ -41,15 +41,15 @@ class ImageProvider {
 		Image dimg;
 		numerosCeldaNoEditable = new ImageIcon[cantElementos];
 		try {
-			for (int i = 1; i <= cantElementos; i++) {
+			for (int i = 0; i < cantElementos; i++) {
 				// Guardamos la imagen en un buffer, lo que nos permite escalarla
 				// Se toma la convención de que el sprite num-tablero-0 es el sprite de la
 				// casilla vacia.
-				path = getClass().getResource("/casilla-no-editable-" + i + ".png").getPath();
+				path = getClass().getResource("/noEditables/casilla-no-editable-" + (i + 1) + ".png").getPath();
 				dimg = ImageIO.read(new File(path));
 				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
 
-				numerosCeldaNoEditable[i-1] = new ImageIcon(dimg);
+				numerosCeldaNoEditable[i] = new ImageIcon(dimg);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -59,8 +59,8 @@ class ImageProvider {
 	public ImageIcon getIconoDeCeldaEditable(int num) {
 		return numerosCeldaEditable[num];
 	}
-	
+
 	public ImageIcon getIconoDeCeldaNoEditable(int num) {
-		return numerosCeldaNoEditable[num-1];
+		return numerosCeldaNoEditable[num - 1];
 	}
 }

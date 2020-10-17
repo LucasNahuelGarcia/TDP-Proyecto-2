@@ -6,7 +6,7 @@ public class CeldaNoEditable extends Celda {
 
 	CeldaNoEditable(ImageProvider imageProvider, int fila, int columna, int val) {
 		super(imageProvider, fila, columna, val);
-		this.setIcon(imageProvider.getIconoDeCeldaEditable(valor));
+		this.setIcon(imageProvider.getIconoDeCeldaNoEditable(valor));
 	}
 
 	@Override
