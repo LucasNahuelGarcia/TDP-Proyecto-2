@@ -191,7 +191,7 @@ public class VentanaPrincipal extends JFrame {
 							Posicion p = new Posicion(celdaActiva.getFila(), celdaActiva.getColumna());
 							tableroLogica.setCelda(p, val);
 							celdaActiva.setValor(val);
-							updateConflictos(tableroLogica.verificarCelda(p), p);
+							updateConflictos(p);
 						} catch (PosicionInvalidaException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -212,20 +212,14 @@ public class VentanaPrincipal extends JFrame {
 		return nueva;
 	}
 
-	private void limpiarConflictos(Posicion p) {
-		List<Posicion> conflictos = conflictosTablero.get(p);
-		celdas[p.fila()][p.columna()].quitarConflicto();
-		if (conflictos != null) {
-			ListIterator<Posicion> listIterator = conflictos.listIterator();
-			while (listIterator.hasNext()) {
-				Posicion pos = listIterator.next();
-				celdas[pos.fila()][pos.columna()].quitarConflicto();
-			}
-		}
-	}
-
-	private void updateConflictos(List<Posicion> conflictosCelda, Posicion p) {
-		limpiarConflictos(p);
+	/**
+	 * Actualiza la lista de conflictos del tablero para una posicion dada.
+	 * 
+	 * @param p Posicion a la que se quiere actualizar conflictos.
+	 */
+	private void updateConflictos(Posicion p) {
+		List<Posicion> conflictosCelda = tableroLogica.verificarCelda(p);
+		desdibujarConflictos(p);
 		if (conflictosCelda.isEmpty())
 			conflictosTablero.remove(p);
 		else
@@ -234,6 +228,9 @@ public class VentanaPrincipal extends JFrame {
 		dibujarConflictos();
 	}
 
+	/**
+	 * Muestra en pantalla los conflictos guardados en conflictosTablero
+	 */
 	private void dibujarConflictos() {
 		int f, c;
 		for (Map.Entry<Posicion, List<Posicion>> entrada : conflictosTablero.entrySet()) {
@@ -246,6 +243,23 @@ public class VentanaPrincipal extends JFrame {
 			while (listIterator.hasNext()) {
 				Posicion pos = listIterator.next();
 				celdas[pos.fila()][pos.columna()].marcarConflicto();
+			}
+		}
+	}
+
+	/**
+	 * Quita la representación gráfica de los conflictos para una celda dada.
+	 * 
+	 * @param p Posición de la celda a la que se quiere desdibujar conflictos.
+	 */
+	private void desdibujarConflictos(Posicion p) {
+		List<Posicion> conflictos = conflictosTablero.get(p);
+		celdas[p.fila()][p.columna()].quitarConflicto();
+		if (conflictos != null) {
+			ListIterator<Posicion> listIterator = conflictos.listIterator();
+			while (listIterator.hasNext()) {
+				Posicion pos = listIterator.next();
+				celdas[pos.fila()][pos.columna()].quitarConflicto();
 			}
 		}
 	}
