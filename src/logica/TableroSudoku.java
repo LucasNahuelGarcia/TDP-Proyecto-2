@@ -30,8 +30,8 @@ public class TableroSudoku {
 	 * @param f Fila de la celda consultada
 	 * @param c Columna de la celda consultada
 	 */
-	public int intAt(int f, int c) {
-		return celdas[f][c];
+	public int intAt(Posicion p) {
+		return celdas[p.fila()][p.columna()];
 	}
 
 	/**
@@ -41,13 +41,13 @@ public class TableroSudoku {
 	 * @param c   columna de la celda
 	 * @param val nuevo valor de la celda
 	 * @return true si se pudo establecer el valor, false si no.
-	 * @throws PosicionInvalidaException 
+	 * @throws PosicionInvalidaException
 	 */
 	public void setCelda(Posicion p, int val) throws PosicionInvalidaException {
 		if (esEditable[p.fila()][p.columna()])
 			celdas[p.fila()][p.columna()] = val;
 		else
-			throw new PosicionInvalidaException(String.format("Posicion f(%d), c(%d)", p.fila(),p.columna()));
+			throw new PosicionInvalidaException(String.format("Posicion f(%d), c(%d)", p.fila(), p.columna()));
 	}
 
 	/**
@@ -93,8 +93,8 @@ public class TableroSudoku {
 	 * @param c columna de la celda.
 	 * @return verdadero si la celda es editable, falso si no.
 	 */
-	public boolean esEditable(int f, int c) {
-		return esEditable[f][c];
+	public boolean esEditable(Posicion p) {
+		return esEditable[p.fila()][p.columna()];
 	}
 
 	/**

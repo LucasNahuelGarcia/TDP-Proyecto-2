@@ -52,7 +52,7 @@ public class tester {
 
 		for (int f = 0; f < 9; f++)
 			for (int c = 0; c < 9; c++)
-				assertEquals((int) arr[f][c], tablero.intAt(f, c));
+				assertEquals((int) arr[f][c], tablero.intAt(new Posicion(f, c)));
 	}
 
 	private boolean tieneConflictos(String nombreArchivo) throws FileNotFoundException, ArchivoIncorrectoException {
@@ -67,6 +67,7 @@ public class tester {
 
 		return conflictos > 0;
 	}
+
 	@Test
 	public void conflictos() throws FileNotFoundException, ArchivoIncorrectoException {
 		assertTrue(tieneConflictos("solucionIncorrectaLinea.txt"));

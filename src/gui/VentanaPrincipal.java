@@ -153,7 +153,8 @@ public class VentanaPrincipal extends JFrame {
 
 		for (int f = 0; f < celdas.length; f++) {
 			for (int c = 0; c < celdas[0].length; c++) {
-				celdas[f][c] = crearCelda(f, c, tableroLogica.intAt(f, c));
+				Posicion p = new Posicion(f, c);
+				celdas[f][c] = crearCelda(p, tableroLogica.intAt(p));
 			}
 		}
 
@@ -167,10 +168,10 @@ public class VentanaPrincipal extends JFrame {
 	 * @param val valor de la celda.
 	 * @return Una celda ya configurada.
 	 */
-	private Celda crearCelda(int f, int c, int val) {
+	private Celda crearCelda(Posicion p, int val) {
 		Celda nueva;
-		if (tableroLogica.esEditable(f, c)) {
-			nueva = new CeldaEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
+		if (tableroLogica.esEditable(p)) {
+			nueva = new CeldaEditable(imageProvider, p, tableroLogica.intAt(p));
 
 			// si es editable, le agregamos un listener para editar el valor de la celda.
 			nueva.addKeyListener(new KeyAdapter() {
@@ -192,7 +193,7 @@ public class VentanaPrincipal extends JFrame {
 			});
 
 		} else {
-			nueva = new CeldaNoEditable(imageProvider, f, c, tableroLogica.intAt(f, c));
+			nueva = new CeldaNoEditable(imageProvider,p, tableroLogica.intAt(p));
 		}
 		nueva.addActionListener((ActionListener) new ActionListener() {
 			@Override

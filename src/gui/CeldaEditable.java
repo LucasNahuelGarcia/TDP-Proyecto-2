@@ -2,12 +2,14 @@ package gui;
 
 import java.awt.Color;
 
+import logica.Posicion;
+
 public class CeldaEditable extends Celda {
 
 	private static final long serialVersionUID = 1L;
 
-	CeldaEditable(ImageProvider imageProvider, int fila, int columna, Integer valor) {
-		super(imageProvider, fila, columna, valor);
+	CeldaEditable(ImageProvider imageProvider, Posicion p, Integer valor) {
+		super(imageProvider, p, valor);
 		// Si el valor es nulo, la casilla esta vacía
 		// usamos por convencion a 0 como indicador de casilla vacía.
 		if (this.valor != null)
@@ -15,8 +17,8 @@ public class CeldaEditable extends Celda {
 		this.setIcon(imageProvider.getIconoDeCeldaEditable(valor));
 	}
 
-	CeldaEditable(ImageProvider imageProvider, int fila, int columna) {
-		this(imageProvider, fila, columna, null);
+	CeldaEditable(ImageProvider imageProvider, Posicion p) {
+		this(imageProvider, p, null);
 	}
 
 	@Override

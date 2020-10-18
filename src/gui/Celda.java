@@ -10,16 +10,17 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import logica.Posicion;
+
 abstract class Celda extends JButton {
 	private static final long serialVersionUID = 1L;
-	protected int fila, columna;
+	protected Posicion posicion;
 	protected Integer valor;
 	protected ImageProvider imageProvider;
 
-	Celda(ImageProvider imageProvider, int fila, int columna, Integer valor) {
+	Celda(ImageProvider imageProvider, Posicion p, Integer valor) {
 		this.imageProvider = imageProvider;
-		this.fila = fila;
-		this.columna = columna;
+		this.posicion = p;
 		this.valor = valor;
 		this.quitarFoco();
 		this.setHorizontalAlignment(JButton.CENTER);
@@ -36,11 +37,11 @@ abstract class Celda extends JButton {
 	}
 
 	public int getFila() {
-		return fila;
+		return posicion.fila();
 	}
 
 	public int getColumna() {
-		return columna;
+		return posicion.columna();
 	}
 
 	public void quitarFoco() {
