@@ -71,6 +71,7 @@ public class tester {
 	public void conflictos() throws FileNotFoundException, ArchivoIncorrectoException {
 		assertTrue(tieneConflictos("solucionIncorrectaLinea.txt"));
 		assertTrue(tieneConflictos("solucionIncorrectaColumna.txt"));
+		assertTrue(tieneConflictos("solucionIncorrectaRegion.txt"));
 		assertFalse(tieneConflictos("archivoCorrecto.txt"));
 	}
 }

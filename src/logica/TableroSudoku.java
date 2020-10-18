@@ -41,12 +41,13 @@ public class TableroSudoku {
 	 * @param c   columna de la celda
 	 * @param val nuevo valor de la celda
 	 * @return true si se pudo establecer el valor, false si no.
+	 * @throws PosicionInvalidaException 
 	 */
-	public boolean setCasillaAt(int f, int c, int val) {
-		boolean correcto = val > 0 && val < 10 && esEditable[f][c];
-		if (correcto)
-			celdas[f][c] = val;
-		return correcto;
+	public void setCelda(Posicion p, int val) throws PosicionInvalidaException {
+		if (esEditable[p.fila()][p.columna()])
+			celdas[p.fila()][p.columna()] = val;
+		else
+			throw new PosicionInvalidaException(String.format("Posicion f(%d), c(%d)", p.fila(),p.columna()));
 	}
 
 	/**
@@ -116,6 +117,14 @@ public class TableroSudoku {
 
 	}
 
+	/**
+	 * Verifica si el valor de una de las celdas es correcto según las reglas del
+	 * sudoku y devuelve una lista con las infracciones de esta.
+	 * 
+	 * @param p poscicion de la celda a verificar.
+	 * @return una lista con las posiciones que tienen un conflicto con el valor de
+	 *         la celda p.
+	 */
 	public List<Posicion> verificarCelda(Posicion p) {
 		List<Posicion> conflictos = new ArrayList<Posicion>();
 		int valCelda = celdas[p.fila()][p.columna()];
@@ -137,7 +146,7 @@ public class TableroSudoku {
 		// Verificamos la region
 		for (int f = fR; (f - fR) < 3; f++)
 			for (int c = cR; (c - cR) < 3; c++)
-				if (celdas[f][c] == valCelda && !p.equals(new Posicion(f,c)))
+				if (celdas[f][c] == valCelda && !p.equals(new Posicion(f, c)))
 					conflictos.add(new Posicion(f, c));
 
 		return conflictos;

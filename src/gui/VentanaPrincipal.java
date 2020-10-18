@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import logica.ArchivoIncorrectoException;
+import logica.Posicion;
+import logica.PosicionInvalidaException;
 import logica.TableroSudoku;
 
 import java.awt.Color;
@@ -51,11 +53,11 @@ public class VentanaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel main;
-	private Celda casillaActiva;
+	private Celda celdaActiva;
 	private TableroSudoku tableroLogica;
 
 	private JPanel[][] regiones;
-	private Celda[][] casillas;
+	private Celda[][] celdas;
 	private Color c_background = Color.BLACK;
 
 	private ImageProvider imageProvider;
@@ -88,7 +90,7 @@ public class VentanaPrincipal extends JFrame {
 		this.imageProvider = imageProvider;
 		tableroLogica = logica;
 
-		crearCasillas();
+		crearCeldas();
 
 		setFont(new Font("Droid Naskh Shift Alt", Font.BOLD, 12));
 		setTitle("Sudoku");
@@ -123,10 +125,9 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	/**
-	 * Inicializa las regiones del tablero y les asigna sus casillas
-	 * correspondientes
+	 * Inicializa las regiones del tablero y les asigna sus celdas correspondientes
 	 * 
-	 * @param tablero el tablero donde se agregan las casillas
+	 * @param tablero el tablero donde se agregan las celdas
 	 */
 	private void crearRegiones(JPanel tablero) {
 		regiones = new JPanel[3][3];
@@ -138,7 +139,7 @@ public class VentanaPrincipal extends JFrame {
 				// Agregamos las celdas correspondientes
 				for (int fCel = 0; fCel < 3; fCel++)
 					for (int cCel = 0; cCel < 3; cCel++) {
-						regiones[fReg][cReg].add(casillas[fCel + 3 * fReg][cCel + 3 * cReg]);
+						regiones[fReg][cReg].add(celdas[fCel + 3 * fReg][cCel + 3 * cReg]);
 					}
 				tablero.add(regiones[fReg][cReg]);
 			}
@@ -147,12 +148,12 @@ public class VentanaPrincipal extends JFrame {
 	/**
 	 * Inicializa el arreglo de celdas de 9x9
 	 */
-	private void crearCasillas() {
-		casillas = new Celda[9][9];
+	private void crearCeldas() {
+		celdas = new Celda[9][9];
 
-		for (int f = 0; f < casillas.length; f++) {
-			for (int c = 0; c < casillas[0].length; c++) {
-				casillas[f][c] = crearCelda(f, c, tableroLogica.intAt(f, c));
+		for (int f = 0; f < celdas.length; f++) {
+			for (int c = 0; c < celdas[0].length; c++) {
+				celdas[f][c] = crearCelda(f, c, tableroLogica.intAt(f, c));
 			}
 		}
 
@@ -176,10 +177,16 @@ public class VentanaPrincipal extends JFrame {
 				@Override
 				public void keyTyped(KeyEvent e) {
 					int val;
-					if (casillaActiva != null && Character.isDigit(e.getKeyChar())) {
+					if (celdaActiva != null && Character.isDigit(e.getKeyChar())) {
 						val = Character.getNumericValue(e.getKeyChar());
-						if (tableroLogica.setCasillaAt(casillaActiva.getFila(), casillaActiva.getColumna(), val))
-							casillaActiva.setValor(val);
+						try {
+							Posicion p = new Posicion(celdaActiva.getFila(), celdaActiva.getColumna());
+							tableroLogica.setCelda(p, val);
+							celdaActiva.setValor(val);
+						} catch (PosicionInvalidaException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				}
 			});
@@ -190,7 +197,7 @@ public class VentanaPrincipal extends JFrame {
 		nueva.addActionListener((ActionListener) new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setCasillaActiva((Celda) e.getSource());
+				setCeldaActiva((Celda) e.getSource());
 			}
 		});
 		return nueva;
@@ -208,10 +215,10 @@ public class VentanaPrincipal extends JFrame {
 		tablero.getActionMap().put("moverUp", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (casillaActiva != null) {
-					int f = (casillaActiva.getFila() - 1 + casillas.length) % casillas.length;
-					int c = casillaActiva.getColumna();
-					setCasillaActiva(casillas[f][c]);
+				if (celdaActiva != null) {
+					int f = (celdaActiva.getFila() - 1 + celdas.length) % celdas.length;
+					int c = celdaActiva.getColumna();
+					setCeldaActiva(celdas[f][c]);
 				}
 			}
 		});
@@ -220,10 +227,10 @@ public class VentanaPrincipal extends JFrame {
 		tablero.getActionMap().put("moverDown", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (casillaActiva != null) {
-					int f = (casillaActiva.getFila() + 1) % casillas.length;
-					int c = casillaActiva.getColumna();
-					setCasillaActiva(casillas[f][c]);
+				if (celdaActiva != null) {
+					int f = (celdaActiva.getFila() + 1) % celdas.length;
+					int c = celdaActiva.getColumna();
+					setCeldaActiva(celdas[f][c]);
 				}
 			}
 		});
@@ -232,10 +239,10 @@ public class VentanaPrincipal extends JFrame {
 		tablero.getActionMap().put("moverLeft", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (casillaActiva != null) {
-					int f = casillaActiva.getFila();
-					int c = (casillaActiva.getColumna() - 1 + casillas[0].length) % casillas[0].length;
-					setCasillaActiva(casillas[f][c]);
+				if (celdaActiva != null) {
+					int f = celdaActiva.getFila();
+					int c = (celdaActiva.getColumna() - 1 + celdas[0].length) % celdas[0].length;
+					setCeldaActiva(celdas[f][c]);
 				}
 			}
 		});
@@ -244,25 +251,25 @@ public class VentanaPrincipal extends JFrame {
 		tablero.getActionMap().put("moverRight", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (casillaActiva != null) {
-					int f = casillaActiva.getFila();
-					int c = (casillaActiva.getColumna() + 1) % casillas[0].length;
-					setCasillaActiva(casillas[f][c]);
+				if (celdaActiva != null) {
+					int f = celdaActiva.getFila();
+					int c = (celdaActiva.getColumna() + 1) % celdas[0].length;
+					setCeldaActiva(celdas[f][c]);
 				}
 			}
 		});
 	}
 
 	/**
-	 * Establece la casilla pasada como parámetro como activa.
+	 * Establece la celda pasada como parámetro como activa.
 	 * 
-	 * @param nuevaActiva nueva casilla activa.
+	 * @param nuevaActiva nueva celda activa.
 	 */
-	private void setCasillaActiva(Celda nuevaActiva) {
-		if (casillaActiva != null)
-			casillaActiva.quitarFoco();
+	private void setCeldaActiva(Celda nuevaActiva) {
+		if (celdaActiva != null)
+			celdaActiva.quitarFoco();
 
 		nuevaActiva.grabFocus();
-		casillaActiva = nuevaActiva;
+		celdaActiva = nuevaActiva;
 	}
 }
