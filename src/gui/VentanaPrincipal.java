@@ -29,6 +29,10 @@ import java.awt.Insets;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -60,6 +64,8 @@ public class VentanaPrincipal extends JFrame {
 	private Celda[][] celdas;
 	private Color c_background = Color.BLACK;
 
+	private Map<Posicion, List<Posicion>> conflictosTablero;
+
 	private ImageProvider imageProvider;
 
 	/**
@@ -89,6 +95,7 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal(TableroSudoku logica, ImageProvider imageProvider) {
 		this.imageProvider = imageProvider;
 		tableroLogica = logica;
+		conflictosTablero = new HashMap<>();
 
 		crearCeldas();
 
@@ -184,6 +191,7 @@ public class VentanaPrincipal extends JFrame {
 							Posicion p = new Posicion(celdaActiva.getFila(), celdaActiva.getColumna());
 							tableroLogica.setCelda(p, val);
 							celdaActiva.setValor(val);
+							updateConflictos(tableroLogica.verificarCelda(p), p);
 						} catch (PosicionInvalidaException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -193,7 +201,7 @@ public class VentanaPrincipal extends JFrame {
 			});
 
 		} else {
-			nueva = new CeldaNoEditable(imageProvider,p, tableroLogica.intAt(p));
+			nueva = new CeldaNoEditable(imageProvider, p, tableroLogica.intAt(p));
 		}
 		nueva.addActionListener((ActionListener) new ActionListener() {
 			@Override
@@ -202,6 +210,44 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		return nueva;
+	}
+
+	private void limpiarConflictos(Posicion p) {
+		List<Posicion> conflictos = conflictosTablero.get(p);
+		celdas[p.fila()][p.columna()].quitarConflicto();
+		if (conflictos != null) {
+			ListIterator<Posicion> listIterator = conflictos.listIterator();
+			while (listIterator.hasNext()) {
+				Posicion pos = listIterator.next();
+				celdas[pos.fila()][pos.columna()].quitarConflicto();
+			}
+		}
+	}
+
+	private void updateConflictos(List<Posicion> conflictosCelda, Posicion p) {
+		limpiarConflictos(p);
+		if (conflictosCelda.isEmpty())
+			conflictosTablero.remove(p);
+		else
+			conflictosTablero.put(p, conflictosCelda);
+
+		dibujarConflictos();
+	}
+
+	private void dibujarConflictos() {
+		int f, c;
+		for (Map.Entry<Posicion, List<Posicion>> entrada : conflictosTablero.entrySet()) {
+			f = entrada.getKey().fila();
+			c = entrada.getKey().columna();
+			celdas[f][c].marcarConflicto();
+
+			ListIterator<Posicion> listIterator = entrada.getValue().listIterator();
+
+			while (listIterator.hasNext()) {
+				Posicion pos = listIterator.next();
+				celdas[pos.fila()][pos.columna()].marcarConflicto();
+			}
+		}
 	}
 
 	/**
@@ -268,7 +314,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private void setCeldaActiva(Celda nuevaActiva) {
 		if (celdaActiva != null)
-			celdaActiva.quitarFoco();
+			celdaActiva.resetColor();
 
 		nuevaActiva.grabFocus();
 		celdaActiva = nuevaActiva;

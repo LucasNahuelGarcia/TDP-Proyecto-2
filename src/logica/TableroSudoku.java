@@ -129,26 +129,43 @@ public class TableroSudoku {
 		List<Posicion> conflictos = new ArrayList<Posicion>();
 		int valCelda = celdas[p.fila()][p.columna()];
 
-		// Verificamos la columna.
-		for (int i = 0; i < celdas.length; i++)
-			if (celdas[i][p.columna()] == valCelda && i != p.fila())
-				conflictos.add(new Posicion(i, p.columna()));
+		if (valCelda > 0) {
+			// Verificamos la columna.
+			for (int i = 0; i < celdas.length; i++)
+				if (celdas[i][p.columna()] == valCelda && i != p.fila())
+					conflictos.add(new Posicion(i, p.columna()));
 
-		// Verificamos la fila.
-		for (int i = 0; i < celdas[0].length; i++)
-			if (celdas[p.fila()][i] == valCelda && i != p.columna())
-				conflictos.add(new Posicion(p.fila(), i));
+			// Verificamos la fila.
+			for (int i = 0; i < celdas[0].length; i++)
+				if (celdas[p.fila()][i] == valCelda && i != p.columna())
+					conflictos.add(new Posicion(p.fila(), i));
 
-		// Encontramos el inicio de la región
-		int fR = (p.fila() / (celdas.length / 3)) * 3;
-		int cR = (p.columna() / (celdas[0].length / 3)) * 3;
+			// Encontramos el inicio de la región
+			int fR = (p.fila() / (celdas.length / 3)) * 3;
+			int cR = (p.columna() / (celdas[0].length / 3)) * 3;
 
-		// Verificamos la region
-		for (int f = fR; (f - fR) < 3; f++)
-			for (int c = cR; (c - cR) < 3; c++)
-				if (celdas[f][c] == valCelda && !p.equals(new Posicion(f, c)))
-					conflictos.add(new Posicion(f, c));
-
+			// Verificamos la region
+			for (int f = fR; (f - fR) < 3; f++)
+				for (int c = cR; (c - cR) < 3; c++)
+					if (celdas[f][c] == valCelda && !p.equals(new Posicion(f, c)))
+						conflictos.add(new Posicion(f, c));
+		}
 		return conflictos;
 	}
+
+	/**
+	 * Verifica la solución del tablero es correcta.
+	 * 
+	 * @return verdadero si el tablero es correcto, falso si no.
+	 */
+	public boolean verificarTablero() {
+		boolean correcta = true;
+
+		for (int f = 0; f < 9 && correcta; f++)
+			for (int c = 0; c < 9 && correcta; c++)
+				correcta = celdas[f][c] != 0 && verificarCelda(new Posicion(f, c)).isEmpty();
+
+		return correcta;
+	}
+
 }

@@ -28,4 +28,12 @@ public class Posicion {
 		}
 		return equals;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = hash * 31 + fila;
+		hash = hash * 31 + columna;
+		return hash;
+	}
 }

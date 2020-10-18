@@ -17,12 +17,14 @@ abstract class Celda extends JButton {
 	protected Posicion posicion;
 	protected Integer valor;
 	protected ImageProvider imageProvider;
+	protected Color color;
 
 	Celda(ImageProvider imageProvider, Posicion p, Integer valor) {
 		this.imageProvider = imageProvider;
 		this.posicion = p;
 		this.valor = valor;
-		this.quitarFoco();
+		this.color = Color.black;
+		resetColor();
 		this.setHorizontalAlignment(JButton.CENTER);
 		this.setVerticalAlignment(JButton.CENTER);
 		this.setBorder(BorderFactory.createEmptyBorder());
@@ -44,7 +46,17 @@ abstract class Celda extends JButton {
 		return posicion.columna();
 	}
 
-	public void quitarFoco() {
-		this.setBackground(Color.black);
+	public void resetColor() {
+		this.setBackground(color);
+	}
+	
+	public void marcarConflicto() {
+		color = Color.red;
+		resetColor();
+	}
+	
+	public void quitarConflicto() {
+		color = Color.black;
+		resetColor();
 	}
 }
