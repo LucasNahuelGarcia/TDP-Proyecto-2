@@ -51,6 +51,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.FlowLayout;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -124,11 +125,34 @@ public class VentanaPrincipal extends JFrame {
 		establecerKeyBindingsTablero(tablero);
 
 		JPanel panel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		flowLayout.setHgap(0);
 		main.add(panel, BorderLayout.SOUTH);
-
-		JLabel lblNewLabel = new JLabel("Aca va el reloj");
-
-		panel.add(lblNewLabel);
+		
+		JPanel panelReloj= new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelReloj.getLayout();
+		flowLayout_1.setHgap(0);
+		panel.add(panelReloj);
+		
+				JLabel hora_0 = new JLabel("");
+				panelReloj.add(hora_0);
+				hora_0.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+				
+				JLabel hora_1 = new JLabel("");
+				panelReloj.add(hora_1);
+				hora_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+				
+				JLabel separador = new JLabel("");
+				panelReloj.add(separador);
+				separador.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/separador.png")));
+				
+				JLabel segundos_0 = new JLabel("");
+				panelReloj.add(segundos_0);
+				segundos_0.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+				
+				JLabel segundos_1 = new JLabel("");
+				panelReloj.add(segundos_1);
+				segundos_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
 	}
 
 	/**
