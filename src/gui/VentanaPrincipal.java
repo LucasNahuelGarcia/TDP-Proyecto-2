@@ -129,7 +129,7 @@ public class VentanaPrincipal extends JFrame {
 		tablero.setAlignmentY(0.5f);
 		tablero.setAlignmentX(0.5f);
 		main.add(tablero, BorderLayout.CENTER);
-		tablero.setLayout(new GridLayout(3, 3, 5, 5));
+		tablero.setLayout(new GridLayout(3, 3, 7, 7));
 		crearRegiones(tablero);
 		establecerKeyBindingsTablero(tablero);
 

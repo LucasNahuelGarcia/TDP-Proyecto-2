@@ -3,6 +3,7 @@ package gui;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,65 +20,35 @@ class ImageProvider {
 	}
 
 	private void cargarIconosCeldaEditable(int cantElementos) {
-		String path;
-		Image dimg;
+		URL path;
 		numerosCeldaEditable = new ImageIcon[cantElementos];
-		try {
 			for (int i = 0; i < cantElementos; i++) {
-				// Guardamos la imagen en un buffer, lo que nos permite escalarla
-				// Se toma la convención de que el sprite num-tablero-0 es el sprite de la
-				// casilla vacia.
-				path = getClass().getResource("/editables/casilla-editable-" + i + ".png").getPath();
-				dimg = ImageIO.read(new File(path));
-				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+				path = getClass().getResource("/editables/casilla-editable-" + i + ".png");
 
-				numerosCeldaEditable[i] = new ImageIcon(dimg);
+				numerosCeldaEditable[i] = new ImageIcon(path);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void cargarIconosCeldaNoEditable(int cantElementos) {
-		String path;
-		Image dimg;
+		URL path;
 		numerosCeldaNoEditable = new ImageIcon[cantElementos];
-		try {
-			for (int i = 0; i < cantElementos; i++) {
-				// Guardamos la imagen en un buffer, lo que nos permite escalarla
-				// Se toma la convención de que el sprite num-tablero-0 es el sprite de la
-				// casilla vacia.
-				path = getClass().getResource("/noEditables/casilla-no-editable-" + (i + 1) + ".png").getPath();
-				dimg = ImageIO.read(new File(path));
-				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+		for (int i = 0; i < cantElementos; i++) {
+			path = getClass().getResource("/noEditables/casilla-no-editable-" + (i + 1) + ".png");
 
-				numerosCeldaNoEditable[i] = new ImageIcon(dimg);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			numerosCeldaNoEditable[i] = new ImageIcon(path);
 		}
 	}
 
 	private void cargarIconosReloj(int cantElementos) {
-		String path;
-		Image dimg;
+		URL path;
 		numerosReloj = new ImageIcon[cantElementos];
-		try {
-			for (int i = 0; i < cantElementos; i++) {
-				// Guardamos la imagen en un buffer, lo que nos permite escalarla
-				// Se toma la convención de que el sprite num-tablero-0 es el sprite de la
-				// casilla vacia.
-				path = getClass().getResource("/reloj/" + (i) + ".png").getPath();
-				dimg = ImageIO.read(new File(path));
-				// dimg = dimg.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+		for (int i = 0; i < cantElementos; i++) {
+			path = getClass().getResource("/reloj/" + (i) + ".png");
 
-				numerosReloj[i] = new ImageIcon(dimg);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			numerosReloj[i] = new ImageIcon(path);
 		}
 	}
-	
+
 	public ImageIcon getIconoDeCeldaEditable(int num) {
 		return numerosCeldaEditable[num];
 	}
@@ -85,7 +56,7 @@ class ImageProvider {
 	public ImageIcon getIconoDeCeldaNoEditable(int num) {
 		return numerosCeldaNoEditable[num - 1];
 	}
-	
+
 	public ImageIcon getIconoReloj(int num) {
 		return numerosReloj[num];
 	}
