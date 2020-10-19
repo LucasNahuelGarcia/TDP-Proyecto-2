@@ -61,7 +61,7 @@ class ImageProvider {
 	private void cargarIconosReloj(int cantElementos) {
 		String path;
 		Image dimg;
-		numerosCeldaNoEditable = new ImageIcon[cantElementos];
+		numerosReloj = new ImageIcon[cantElementos];
 		try {
 			for (int i = 0; i < cantElementos; i++) {
 				// Guardamos la imagen en un buffer, lo que nos permite escalarla

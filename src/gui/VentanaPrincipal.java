@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
@@ -29,6 +30,7 @@ import java.awt.Insets;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -64,6 +66,8 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel[][] regiones;
 	private Celda[][] celdas;
 	private Color c_background = Color.BLACK;
+	private JLabel reloj_view[];
+	private int timer_segundos;
 
 	private Map<Posicion, List<Posicion>> conflictosTablero;
 
@@ -128,31 +132,47 @@ public class VentanaPrincipal extends JFrame {
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setHgap(0);
 		main.add(panel, BorderLayout.SOUTH);
-		
-		JPanel panelReloj= new JPanel();
+
+		JPanel panelReloj = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panelReloj.getLayout();
 		flowLayout_1.setHgap(0);
 		panel.add(panelReloj);
-		
-				JLabel hora_0 = new JLabel("");
-				panelReloj.add(hora_0);
-				hora_0.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
-				
-				JLabel hora_1 = new JLabel("");
-				panelReloj.add(hora_1);
-				hora_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
-				
-				JLabel separador = new JLabel("");
-				panelReloj.add(separador);
-				separador.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/separador.png")));
-				
-				JLabel segundos_0 = new JLabel("");
-				panelReloj.add(segundos_0);
-				segundos_0.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
-				
-				JLabel segundos_1 = new JLabel("");
-				panelReloj.add(segundos_1);
-				segundos_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+
+		reloj_view = new JLabel[4];
+
+		JLabel hora_0 = new JLabel("");
+		panelReloj.add(hora_0);
+		hora_0.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+		reloj_view[0] = hora_0;
+
+		JLabel hora_1 = new JLabel("");
+		panelReloj.add(hora_1);
+		hora_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+		reloj_view[1] = hora_1;
+
+		JLabel separador = new JLabel("");
+		panelReloj.add(separador);
+		separador.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/separador.png")));
+
+		JLabel segundos_0 = new JLabel("");
+		panelReloj.add(segundos_0);
+		segundos_0.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+		reloj_view[2] = segundos_0;
+
+		JLabel segundos_1 = new JLabel("");
+		panelReloj.add(segundos_1);
+		segundos_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
+		reloj_view[3] = segundos_1;
+
+		resetReloj();
+		dibujarReloj();
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				timer_segundos++;
+				dibujarReloj();
+			}
+		});
+		timer.start();
 	}
 
 	/**
@@ -356,5 +376,19 @@ public class VentanaPrincipal extends JFrame {
 
 		nuevaActiva.grabFocus();
 		celdaActiva = nuevaActiva;
+	}
+
+	private void resetReloj() {
+		timer_segundos = 0;
+	}
+
+	private void dibujarReloj() {
+		int segundos = timer_segundos % 60;
+		int minutos = timer_segundos / 60;
+
+		reloj_view[0].setIcon(imageProvider.getIconoReloj(minutos / 10));
+		reloj_view[1].setIcon(imageProvider.getIconoReloj(minutos % 10));
+		reloj_view[2].setIcon(imageProvider.getIconoReloj(segundos / 10));
+		reloj_view[3].setIcon(imageProvider.getIconoReloj(segundos % 10));
 	}
 }
