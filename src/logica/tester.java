@@ -34,13 +34,6 @@ public class tester {
 		tablero.leerArchivo(rutaArchivo + "archivoCorrecto.txt");
 	}
 
-	private void inicializarArr(Integer arr[][]) {
-		for (int f = 0; f < arr.length; f++) {
-			for (int c = 0; c < arr[0].length; c++)
-				arr[f][c] = (c + f) % 10;
-		}
-	}
-
 	@Test
 	public void leeCorrectamente() throws ArchivoIncorrectoException, FileNotFoundException {
 		Integer[][] arr = { { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
