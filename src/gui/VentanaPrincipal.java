@@ -378,10 +378,16 @@ public class VentanaPrincipal extends JFrame {
 		celdaActiva = nuevaActiva;
 	}
 
+	/**
+	 * Establece el tiempo del reloj en 0
+	 */
 	private void resetReloj() {
 		timer_segundos = 0;
 	}
 
+	/**
+	 * Actualiza los jlabel que muestran el tiempo.
+	 */
 	private void dibujarReloj() {
 		int segundos = timer_segundos % 60;
 		int minutos = timer_segundos / 60;
