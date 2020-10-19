@@ -5,6 +5,7 @@ import java.awt.Color;
 import logica.Posicion;
 
 public class CeldaNoEditable extends Celda {
+	private static final long serialVersionUID = 2843864743814307535L;
 
 	CeldaNoEditable(ImageProvider imageProvider, Posicion p, int val) {
 		super(imageProvider, p, val);
