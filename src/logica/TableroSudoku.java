@@ -78,12 +78,16 @@ public class TableroSudoku {
 					celdas[f][c] = Integer.parseInt(fila[c]);
 
 			}
+			if(!this.verificarTablero())
+				throw new ArchivoIncorrectoException("El archivo no contiene un sudoku valido.");
 		} catch (NumberFormatException e) {
 			String msg = String.format("No se pudo interpretar un elemento del archivo %s", ruta);
 			throw new ArchivoIncorrectoException(msg);
 		} finally {
 			scanner.close();
 		}
+		
+		
 	}
 
 	/**

@@ -39,6 +39,7 @@ import java.util.Map;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -81,13 +82,17 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				ImageProvider imageProvider = new ImageProvider();
 				try {
-					ImageProvider imageProvider = new ImageProvider();
-					logica.leerArchivo("/home/lucas/Documentos/TecProg/proyecto2/Sudoku/res/archivoCorrecto.txt");
+					logica.leerArchivo("./sudoku.txt");
 					logica.eliminarCeldas(3);
 					VentanaPrincipal frame = new VentanaPrincipal(logica, imageProvider);
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(null, "El archivo no se encontro.");
+					e.printStackTrace();
+				} catch (ArchivoIncorrectoException e) {
+					JOptionPane.showMessageDialog(null, "El archivo no es correcto.");
 					e.printStackTrace();
 				}
 			}
@@ -130,7 +135,6 @@ public class VentanaPrincipal extends JFrame {
 
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setHgap(0);
 		main.add(panel, BorderLayout.SOUTH);
 
 		JPanel panelReloj = new JPanel();
@@ -163,6 +167,14 @@ public class VentanaPrincipal extends JFrame {
 		panelReloj.add(segundos_1);
 		segundos_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/reloj/0.png")));
 		reloj_view[3] = segundos_1;
+		
+		JButton btnVerificar = new JButton("Verificar");
+		btnVerificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				verificarVictoria();
+			}
+		});
+		panel.add(btnVerificar);
 
 		resetReloj();
 		dibujarReloj();
@@ -237,7 +249,6 @@ public class VentanaPrincipal extends JFrame {
 							celdaActiva.setValor(val);
 							updateConflictos(p);
 						} catch (PosicionInvalidaException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}
@@ -385,8 +396,15 @@ public class VentanaPrincipal extends JFrame {
 		timer_segundos = 0;
 	}
 
+	private void verificarVictoria() {
+		if (conflictosTablero.isEmpty() && tableroLogica.verificarTablero())
+			JOptionPane.showMessageDialog(null, "Ganaste");
+		else
+			JOptionPane.showMessageDialog(null, "No ganaste");
+	}
+
 	/**
-	 * Actualiza los jlabel que muestran el tiempo.
+	 * Actualiza los jlabel que muestran el tiempo.6
 	 */
 	private void dibujarReloj() {
 		int segundos = timer_segundos % 60;
